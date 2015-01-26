@@ -1,5 +1,6 @@
 <?php
-class ParseNginxLog
+include dirname(__FILE__) . '/interface_parse_log.php';
+class ParseNginxLog implements IParseLog
 {
     public function statLogInfo(&$statInfos, $info)
     {

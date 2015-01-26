@@ -1,7 +1,8 @@
 <?php
-class ParseNginxErrorLog
+include dirname(__FILE__) . '/interface_parse_log.php';
+class ParseNginxErrorLog implements IParseLog
 {
-    static  public function parseOneLine($line)
+    public function parseOneLine($line)
     {
         $pattern = '#(\d+/\d+/\d+).*request:\ "\w+\ ((/\w*)*)(\?)?#';
         $matchArr = array();
@@ -19,7 +20,7 @@ class ParseNginxErrorLog
         }
         return $res;
     }
-    static public function statLogInfo(&$statInfos, $info)
+    public function statLogInfo(&$statInfos, $info)
     {
         // if (date('Y/m/d') != $info['date'])
         if ('2015/01/26' != $info['date'])
@@ -46,7 +47,7 @@ class ParseNginxErrorLog
             $statInfos[$action]++;
         }
     }
-    static public function afterParseOp($statInfos, $resLog)
+    public function afterParseOp($statInfos, $resLog)
     {
         $fd = @fopen($resLog, 'w');
         if ($fd === false)
