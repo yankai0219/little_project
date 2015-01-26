@@ -1,0 +1,16 @@
+ParseLogProt类中定义了日志解析框架.
+该框架的目的：
+    在不同的日志解析中，不同的地方在于：1）每行的解析不同 2）解析每行以后的统计不同 3）整体解析完毕后的处理不同
+    相同的地方在于：1）分析来自不同服务器的相同日志（多个文件） 2）读取日志的每一行 3）存储解析结果
+    将上述相同的部分提取出来，将不同的地方作为一个类作为参数传入。
+首先说明如何使用：
+    php parse_log.php parse_log_class.php ParseLogClass result_log need_parsed_error1.log  need_parsed_error2.log
+    各个参数的含义：
+        parse_log_class.php: 实现接口IParseLog类的文件
+        parseLogClass: 实现接口IParseLog的类的名称 要与parse_log_class.php 名称一致
+        result_log: 记录解析结果的日志。 在接口方法afterParseOp($statInfos, $resLog)的第二个参数就是result_log
+        need_parsed_error1.log … ：需要解析的日志
+举例：
+    在该框架的文件中：
+    parse_nginx_error_log.php 解析video_error.log 
+    parse_nginx_log.php 解析video_release.log
